@@ -1,15 +1,15 @@
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request,render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return render_template('index.html')
 
-@app.route('/send_json_to_web',methods=["POST"])
+@app.route('/send_json_to_web',methods=["GET"])
 def send_json_to_web():
-    return jsonify({'result':'Success','name':'Tom','age':'88'})
+    return jsonify([{'id':1,'name':'James','drink':'Coffee'},{'id':2,'name':'John','drink':'Latte'}])
 
 
 @app.route('/receive_json_from_web',methods=["POST"])
