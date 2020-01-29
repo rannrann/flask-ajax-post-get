@@ -1,6 +1,8 @@
 
 $(function (){
-
+    var $orders = $('#orders');
+    var $name = $('#name');
+    var $drink = $('#drink');
 
     $.ajax({
         type:'GET',
@@ -15,4 +17,19 @@ $(function (){
         }
     });
 
+    $('#add-order').on('click', function(){
+       var order = {
+           'name':$name.val(),
+           'drink':$drink.val(),
+       };
+
+       $.ajax({
+           type:'POST',
+           url:'/receive_json_from_web',
+           data:JSON.stringify(order),
+           success:function (newOrder) {
+                $("#orders").append('<li>name: '+ newOrder.name+', drink: '+ newOrder.drink +' </li>');
+           }
+       });
+    });
 });

@@ -14,11 +14,10 @@ def send_json_to_web():
 
 @app.route('/receive_json_from_web',methods=["POST"])
 def receive_json_from_web():
-    data = request.get_json()
-    name = data['name']
-    location = data['location']
-    randomlist = data['randomlist']
-    return jsonify({'result':'Success' , 'name' : name , 'location' : location, 'randomkeyinlist' : randomlist[1]})
+    data = request.get_json(force=True)
+    name = data["name"]
+    drink = data["drink"]
+    return jsonify({'name':name , 'drink' : drink})
 
 if __name__ == '__main__':
     app.run(debug=True)
