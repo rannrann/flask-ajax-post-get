@@ -17,7 +17,13 @@ def receive_json_from_web():
     data = request.get_json(force=True)
     name = data["name"]
     drink = data["drink"]
+    for i in data:
+        print(data[i])
     return jsonify({'name':name , 'drink' : drink})
+
+@app.route('/send_list_to_web',methods=["GET"])
+def send_list_to_web():
+    return jsonify({'result':['find','rannnrann']})
 
 if __name__ == '__main__':
     app.run(debug=True)

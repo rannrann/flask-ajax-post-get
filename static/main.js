@@ -29,6 +29,9 @@ $(function (){
            data:JSON.stringify(order),
            success:function (newOrder) {
                 $("#orders").append('<li>name: '+ newOrder.name+', drink: '+ newOrder.drink +' </li>');
+           },
+           error:function () {
+                alert('error posting orders');
            }
        });
     });

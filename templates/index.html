@@ -4,18 +4,57 @@
     <meta charset="UTF-8">
     <title>jQuery Ajax tutorial</title>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/static/main.js"></script>
+    <script>
+
+        $(function () {
+            var $orders = $('#orders');
+            var $name = $('#name');
+            var $drink = $('#drink');
+
+            $.ajax({
+                type: 'GET',
+                url: '/send_json_to_web',
+                success: function (orders) {
+                    $.each(orders, function (i, order) {
+                        $("#orders").append('<li>name: ' + order.name + ', drink: ' + order.drink + ' </li>');
+                    });
+                },
+                error: function () {
+                    alert('error loading orders');
+                }
+            });
+
+            $('#add-order').on('click', function () {
+                var order = {
+                    'name': $name.val(),
+                    'drink': $drink.val(),
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/receive_json_from_web',
+                    data: JSON.stringify(order),
+                    success: function (newOrder) {
+                        $("#orders").append('<li>name: ' + newOrder.name + ', drink: ' + newOrder.drink + ' </li>');
+                    },
+                    error: function () {
+                        alert('error posting orders');
+                    }
+                });
+            });
+        });
+    </script>
 
 </head>
 <body>
-    <h1>jQuery Ajax Tutorial</h1>
-    <h2>Coffee Orders</h2>
-    <ul id="orders">
+<h1>jQuery Ajax Tutorial</h1>
+<h2>Coffee Orders</h2>
+<ul id="orders">
 
-    </ul>
-    <h4>Add a Coffee Order</h4>
-    <p>name:<input type="text" id="name"/></p>
-    <p>drink:<input type="text" id="drink"/></p>
-    <button id="add-order">Add!</button>
+</ul>
+<h4>Add a Coffee Order</h4>
+<p>name:<input type="text" id="name"/></p>
+<p>drink:<input type="text" id="drink"/></p>
+<button id="add-order">Add!</button>
 </body>
 </html>
